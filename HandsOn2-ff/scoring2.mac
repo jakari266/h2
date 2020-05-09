@@ -1,0 +1,34 @@
+/run/initialize
+ ########################################
+ #
+ # define scoring mesh
+ #
+ /score/create/boxMesh boxMesh_1
+ #
+ #Create a mesh large as the box
+ /score/mesh/boxSize 150. 30. 50. cm
+ #Position it over the box
+ /score/mesh/translate/xyz 0 0 8 m
+ #mesh voxel size of 5cm
+ /score/mesh/nBin 30 6 10
+ # All these quantities are associated
+ # with the mesh with name "boxMesh_1"
+ /score/quantity/energyDeposit eDep
+ /score/quantity/nOfStep nOfStepGamma
+ /score/filter/particle gammaFilter gamma
+ /score/quantity/nOfStep nOfStepEMinus
+ /score/filter/particle eMinusFilter e-
+ /score/quantity/nOfStep nOfStepEPlus
+ /score/filter/particle ePlusFilter e+
+ #
+ /score/close
+ #
+ /run/verbose 1
+ /gun/particle e-
+ /run/beamOn 2000
+ ########################################
+ #
+ # Dump scores to a file: tell G4 which
+ # mesh and which quantity should go in the output file
+ #
+ /score/dumpQuantityToFile boxMesh_1 nOfStepGamma nOfStepGamma.txt
